@@ -1,103 +1,113 @@
-import Image from "next/image";
+"use client"
+import ImageSlider from "./components/ImageSlider"
+import VideoGallery from "./components/VideoGallery"
+import PropertyInfo from "./components/PropertyInfo"
+import LocationMap from "./components/LocationMap"
+import Features from "./components/Features"
+import ContactAgent from "./components/ContactAgent"
 
-export default function Home() {
+// Sample property data
+const propertyData = {
+  id: 1,
+  title: "Luxury Modern Villa with Ocean View",
+  price: 2850000,
+  location: {
+    address: "1234 Ocean Drive, Malibu, CA 90265",
+    city: "Malibu",
+    state: "California",
+    zipCode: "90265",
+    coordinates: { lat: 34.0259, lng: -118.7798 },
+  },
+  images: [
+    "/placeholder.svg?height=600&width=800",
+    "/placeholder.svg?height=600&width=800",
+    "/placeholder.svg?height=600&width=800",
+    "/placeholder.svg?height=600&width=800",
+    "/placeholder.svg?height=600&width=800",
+  ],
+  videos: [
+    { id: 1, title: "Property Tour", thumbnail: "/placeholder.svg?height=300&width=400", url: "#" },
+    { id: 2, title: "Neighborhood Overview", thumbnail: "/placeholder.svg?height=300&width=400", url: "#" },
+    { id: 3, title: "Drone Footage", thumbnail: "/placeholder.svg?height=300&width=400", url: "#" },
+  ],
+  details: {
+    bedrooms: 5,
+    bathrooms: 4,
+    sqft: 4200,
+    lotSize: "0.75 acres",
+    yearBuilt: 2019,
+    propertyType: "Single Family Home",
+    parking: "3-car garage",
+    hoa: "$450/month",
+  },
+  features: [
+    "Ocean View",
+    "Swimming Pool",
+    "Home Theater",
+    "Wine Cellar",
+    "Gourmet Kitchen",
+    "Master Suite",
+    "Guest House",
+    "Landscaped Garden",
+    "Smart Home Technology",
+    "Solar Panels",
+    "Security System",
+    "Fireplace",
+  ],
+  description:
+    "Experience luxury living in this stunning modern villa featuring breathtaking ocean views, premium finishes, and state-of-the-art amenities. This architectural masterpiece offers the perfect blend of comfort and sophistication.",
+  agent: {
+    name: "Sarah Johnson",
+    phone: "(555) 123-4567",
+    email: "sarah@luxuryrealty.com",
+    image: "/placeholder.svg?height=100&width=100",
+  },
+}
+
+export default function PropertyDetail() {
   return (
-    <div className="font-sans grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20">
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="font-mono list-inside list-decimal text-sm/6 text-center sm:text-left">
-          <li className="mb-2 tracking-[-.01em]">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] font-mono font-semibold px-1 py-0.5 rounded">
-              src/app/page.js
-            </code>
-            .
-          </li>
-          <li className="tracking-[-.01em]">
-            Save and see your changes instantly.
-          </li>
-        </ol>
+    <div className="min-h-screen bg-gray-50">
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:w-auto"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent font-medium text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 w-full sm:w-auto md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Property Title and Price */}
+        <div className="mb-8">
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">{propertyData.title}</h1>
+          <p className="text-xl text-gray-600 mb-4">{propertyData.location.address}</p>
+          <div className="flex items-center justify-between">
+            <span className="text-4xl font-bold text-blue-600">${propertyData.price.toLocaleString()}</span>
+          </div>
+        </div>
+
+        {/* Image Slider */}
+        <div className="mb-12">
+          <ImageSlider images={propertyData.images} />
+        </div>
+
+        {/* Video Gallery */}
+        <div className="mb-12">
+          <VideoGallery videos={propertyData.videos} />
+        </div>
+
+        {/* Property Information Grid */}
+        <div className="grid lg:grid-cols-3 gap-8 mb-12">
+          <div className="lg:col-span-2">
+            <PropertyInfo property={propertyData} />
+          </div>
+          <div>
+            <ContactAgent agent={propertyData.agent} />
+          </div>
+        </div>
+
+        {/* Features */}
+        <div className="mb-12">
+          <Features features={propertyData.features} />
+        </div>
+
+        {/* Location */}
+        <div className="mb-12">
+          <LocationMap location={propertyData.location} />
         </div>
       </main>
-      <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
     </div>
-  );
+  )
 }
